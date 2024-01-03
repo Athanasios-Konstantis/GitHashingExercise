@@ -1,9 +1,0 @@
-#RUN THIS ON FISH SHELL, NOT BASH
-set string "$argv[1]"
-if test -z "$argv[1]"
-	echo "Usage: ./script.sh <string>"
-else
-	set hash (echo -n "$string" | sha256sum)
-	echo "$hash"
-end
-

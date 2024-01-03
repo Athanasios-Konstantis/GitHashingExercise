@@ -1,0 +1,32 @@
+example_kill.c:
+This piece of code takes one argument of integer type. It creates a signal catcher function for SIGUSR1, which counts the amount of times the signal has been called in the variable sigcount. Then, it uses the function sendsig to send the signal programmatically. The function sendsig recieves the user-input integer and sends the SIGUSR1 signal floor((n-1)/10) + 1 times. The code allows the user to choose how many times they want the signal to be sent and prints out the amount of times it was sent and the amount of times the signal was caught.
+Example call: ./example_kill 11
+
+example_pause.c:
+This code takes one integer input. It creates a handler for the SIGALRM signal, that prints out info that the signal was caught. Then, it calls the alarm() function, which send a signal of SIGALRM type after the user-inputted time in seconds. Before the program pausing, it prints the current timestamp. The program un-pauses when the SIGALRM signal is recieved, and it prints the final timestamp.
+Example call: ./example_pause 7
+
+example_sleep.c:
+This program defines a signal handler for the SIGINT signal (sent when the user presses CTR+C). Then, the program sleeps for 1 second forever, untel the user has sent the SIGINT signal. When that happens, it prints some info about catching the signal and exits.
+Example call: ./example_sleep.c
+
+immun2ctrlC.c:
+This program takes an integer input. It replaces the SIGINT signal (sent when the user presses CTR+C) with the SIG_IGN signal, which means that the SIGINT signal is ignored. Then the program sleeps for the amount of seconds the user chose. That's when the user can attempt to send the SIGINT signal and notice that it doesn't interrupt the program as is his usual function.
+Example call: ./immn2ctrlC 15
+
+pipe_1.c:
+This program takes an integer input. It then opens a pipe and creates the amount of children the user chose with their input. Each child is given the pipe and they close its reading end. When each child is created, it writes a message in the pipe and closes its writing end as well. The parent closes the writing end of the pipe and reads the pipe input as the children write in it, reading in in the output buffer stdout so that the user can see it. Then the parent closes the reading end as well and the program terminates.
+Example call: ./pipe_1 5
+
+pipe_2.c:
+This program serves as an example of a message sent through a pipe. At first a pipe is created, and then the program is split into parent and child with fork. There is some basic error handling in case any of the above fail. Then, the parent closes the reading end of the pipe and writes a message in the pipe, then also closing its writing end. The child closes the writing end of the pipe and reads the message that the parent has sent through the pipe. Then it writes that message to the user's screen, closes the reading end of the pipe and exits.
+Example call: ./pipe_2
+
+signal.c:
+This program needs at least one input parameter to work. The input should be a linux command, with an optional -t in the beginning, where t is an integer of the seconds the program waits. After the user has ran the program with an input of a command, the program uses fork() to split into a parent and a child. The child executes the given command, while the parent declares a signal handle function "onalarm", called when the signal SIGALRM is received. Then, with the use of the alarm() function, the parent emits the alarm signal after the user-inputted time in seconds has passed (default is 10). If the child hasn't finished running the linux command before the signal emits, then the child is terminated by a SIGKILL signal, and the parent prints the info that the child was killed and exits.
+Example call: ./signal -5 ls -al
+
+
+
+
+
